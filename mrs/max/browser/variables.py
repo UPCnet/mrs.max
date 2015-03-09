@@ -1,8 +1,7 @@
+from plone import api
 from zope.component import queryUtility
 from zope.component.hooks import getSite
 from zope.publisher.browser import BrowserView
-
-from Products.CMFCore.utils import getToolByName
 
 from plone.registry.interfaces import IRegistry
 
@@ -39,22 +38,20 @@ class MAXJSVariables(BrowserView):
         registry = queryUtility(IRegistry)
         settings = registry.forInterface(IMAXUISettings, check=False)
 
-        pm = getToolByName(context, "portal_membership")
-        if pm.isAnonymousUser():  # the user has not logged in
+        if api.user.is_anonymous():  # the user has not logged in
             username = ''
             oauth_token = ''
         else:
-            member = pm.getAuthenticatedMember()
-            username = member.getUserName()
-            member = pm.getMemberById(username)
-            oauth_token = member.getProperty('oauth_token', None)
+            user = api.user.get_current()
+            username = user.id
+            oauth_token = user.getProperty('oauth_token', None)
 
         # Use the restricted username and token in case we are admin.
         if username == 'admin':
             username = settings.max_restricted_username
             oauth_token = settings.max_restricted_token
 
-        pl = getToolByName(self.context, "portal_languages")
+        pl = api.portal.get_tool('portal_languages')
         default_lang = pl.getDefaultLanguage()
 
         activity_views_map = {
