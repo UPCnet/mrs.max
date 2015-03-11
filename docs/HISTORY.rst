@@ -1,11 +1,11 @@
 Changelog
 =========
 
-4.0.29 (unreleased)
+4.0.29 (2015-03-11)
 -------------------
 
-- Nothing changed yet.
-
+* Optimizations and improvements on templates and getMemberById [Victor Fernandez de Alba]
+* New viewlet for oauthinfo tag [Victor Fernandez de Alba]
 
 4.0.28 (2015-03-05)
 -------------------
