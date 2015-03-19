@@ -1,11 +1,11 @@
 Changelog
 =========
 
-4.0.30 (unreleased)
+4.0.30 (2015-03-19)
 -------------------
 
-- Nothing changed yet.
-
+* New build [Victor Fernandez de Alba]
+* Update setup_maxui [Carles Bruguera]
 
 4.0.29 (2015-03-11)
 -------------------
