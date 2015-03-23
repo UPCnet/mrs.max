@@ -20,6 +20,8 @@ from plone.directives import form
 DEFAULT_OAUTH_TOKEN_ENDPOINT = u'https://oauth.upcnet.es'
 DEFAULT_OAUTH_GRANT_TYPE = u'password'  # deprecated
 DEFAULT_MAX_SERVER = u'https://max.upcnet.es'
+DEFAULT_HUB_SERVER = u'http://hub.upcnet.es'
+DEFAULT_DOMAIN = u'UPCNET'
 DEFAULT_MAX_APP_USERNAME = u'appusername'  # deprecated
 DEFAULT_MAX_RESTRICTED_USERNAME = u'restricted'
 
@@ -98,10 +100,26 @@ class IMAXUISettings(form.Schema):
 
     max_domain = schema.TextLine(
         title=_(u'label_max_domain', default=u'MAX domain'),
-        description=_(u'help_max_restricted_username',
+        description=_(u'help_max_domain',
                       default=u"Please, specify the MAX domain for this site (only for legacy IE)."),
         required=False,
         default=u''
+    )
+
+    hub_server = schema.TextLine(
+        title=_(u'label_hub_server', default=u'uLearnHub server'),
+        description=_(u'help_hub_server',
+                      default=u"Please, specify the uLearnHub server for this site."),
+        required=False,
+        default=DEFAULT_HUB_SERVER
+    )
+
+    domain = schema.TextLine(
+        title=_(u'label_domain', default=u'MAX domain'),
+        description=_(u'help_domain',
+                      default=u"Please, specify the HUB domain for this site."),
+        required=False,
+        default=DEFAULT_DOMAIN
     )
 
 
