@@ -99,7 +99,7 @@ class IMAXUISettings(form.Schema):
     )
 
     max_domain = schema.TextLine(
-        title=_(u'label_max_domain', default=u'MAX domain'),
+        title=_(u'label_max_domain', default=u'IE fallback MAX domain'),
         description=_(u'help_max_domain',
                       default=u"Please, specify the MAX domain for this site (only for legacy IE)."),
         required=False,
