@@ -12,6 +12,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.app.registry.browser import controlpanel
 from plone.registry.interfaces import IRegistry
 
+from maxclient.rest import MaxClient
 from mrs.max import MRSMAXMessageFactory as _
 
 from plone.directives import form
@@ -20,8 +21,9 @@ from plone.directives import form
 DEFAULT_OAUTH_TOKEN_ENDPOINT = u'https://oauth.upcnet.es'
 DEFAULT_OAUTH_GRANT_TYPE = u'password'  # deprecated
 DEFAULT_MAX_SERVER = u'https://max.upcnet.es'
-DEFAULT_HUB_SERVER = u'http://hub.upcnet.es'
-DEFAULT_DOMAIN = u'UPCNET'
+DEFAULT_HUB_SERVER = u'http://rocalcom.upc.edu:16000'
+# DEFAULT_HUB_SERVER = u'http://hub.upcnet.es'
+DEFAULT_DOMAIN = u'rootexterns'
 DEFAULT_MAX_APP_USERNAME = u'appusername'  # deprecated
 DEFAULT_MAX_RESTRICTED_USERNAME = u'restricted'
 
@@ -31,21 +33,13 @@ class IMAXUISettings(form.Schema):
     configuration registry and obtainable via plone.registry.
     """
 
+    form.mode(oauth_server='hidden')
     oauth_server = schema.TextLine(
         title=_(u'label_oauth_server', default=u'OAuth token endpoint'),
         description=_(u'help_oauth_server',
                       default=u"Please, specify the URI for the oAuth server."),
         required=True,
         default=DEFAULT_OAUTH_TOKEN_ENDPOINT
-    )
-
-    form.mode(oauth_grant_type='hidden')
-    oauth_grant_type = schema.TextLine(
-        title=_(u'label_oauth_grant_type', default=u'OAuth grant type'),
-        description=_(u'help_oauth_grant_type',
-                      default=u"Please, specify the oAuth grant type."),
-        required=True,
-        default=DEFAULT_OAUTH_GRANT_TYPE
     )
 
     max_server = schema.TextLine(
@@ -64,23 +58,6 @@ class IMAXUISettings(form.Schema):
         default=DEFAULT_MAX_SERVER
     )
 
-    form.mode(max_app_username='hidden')
-    max_app_username = schema.TextLine(
-        title=_(u'label_max_app_username', default=u'MAX application agent username'),
-        description=_(u'help_max_app_username',
-                      default=u"Please, specify the MAX application agent username."),
-        required=False,
-        default=DEFAULT_MAX_APP_USERNAME
-    )
-
-    form.mode(max_app_token='hidden')
-    max_app_token = schema.Password(
-        title=_(u'label_max_app_token', default=u'MAX application token'),
-        description=_(u'help_max_app_token',
-                      default=u"Please, specify the MAX application token."),
-        required=False,
-    )
-
     form.mode(max_restricted_username='hidden')
     max_restricted_username = schema.TextLine(
         title=_(u'label_max_restricted_username', default=u'MAX restricted username'),
@@ -96,14 +73,6 @@ class IMAXUISettings(form.Schema):
         description=_(u'help_max_restricted_token',
                       default=u"Please, specify the MAX restricted user token."),
         required=False,
-    )
-
-    max_domain = schema.TextLine(
-        title=_(u'label_max_domain', default=u'IE fallback MAX domain'),
-        description=_(u'help_max_domain',
-                      default=u"Please, specify the MAX domain for this site (only for legacy IE)."),
-        required=False,
-        default=u''
     )
 
     hub_server = schema.TextLine(
@@ -135,7 +104,7 @@ class MAXUISettingsEditForm(controlpanel.RegistryEditForm):
 
     def updateFields(self):
         super(MAXUISettingsEditForm, self).updateFields()
-        #self.fields = self.fields.omit('max_app_token')
+        # self.fields = self.fields.omit('max_app_token')
 
     def updateWidgets(self):
         super(MAXUISettingsEditForm, self).updateWidgets()
@@ -146,6 +115,10 @@ class MAXUISettingsEditForm(controlpanel.RegistryEditForm):
         if errors:
             self.status = self.formErrorsMessage
             return
+
+        # Auto-fill the oauth_server from max_server info endpoint
+        maxclient = MaxClient(url=data['max_server'])
+        data['oauth_server'] = maxclient.oauth_server
 
         changes = self.applyChanges(data)
 

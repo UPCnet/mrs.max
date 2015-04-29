@@ -4,9 +4,10 @@ from plone.registry.interfaces import IRegistry
 from zope.component import queryUtility
 
 from maxclient.rest import MaxClient
+from hubclient import HubClient
 from mrs.max.browser.controlpanel import IMAXUISettings
 
-import plone.api
+from plone import api
 
 import logging
 from pprint import pformat
@@ -17,6 +18,10 @@ logger = logging.getLogger('mrs.max')
 
 class IMAXClient(Interface):
     """ Marker for MaxClient global utility """
+
+
+class IHubClient(Interface):
+    """ Marker for HubClient global utility """
 
 
 class max_client_utility(object):
@@ -34,8 +39,23 @@ class max_client_utility(object):
 grok.global_utility(max_client_utility)
 
 
+class hub_client_utility(object):
+    """ The utility will return a tuple with the settins and an instance of a
+        HubClient (REST-ish) object.
+    """
+    grok.implements(IHubClient)
+
+    def __call__(self):
+        registry = queryUtility(IRegistry)
+        settings = registry.forInterface(IMAXUISettings, check=False)
+        return (HubClient(settings.domain, settings.hub_server, expand_underscores=False),
+                settings)
+
+grok.global_utility(hub_client_utility)
+
+
 def set_user_oauth_token(user, token):
-    member = plone.api.user.get(username=user)
+    member = api.user.get(username=user)
     member.setMemberProperties({'oauth_token': token})
 
 
