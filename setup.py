@@ -34,6 +34,7 @@ setup(name='mrs.max',
           'plone.app.z3cform',
           'plone.directives.form',
           'maxclient',
+          'hubclient',
           'plone.api'
       ],
       extras_require={'test': ['plone.app.testing[robot]>=4.2.2']},

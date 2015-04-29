@@ -12,7 +12,6 @@ TEMPLATE = """\
 if (!window._MAXUI) {window._MAXUI = {}; }
 window._MAXUI.username = '%(username)s';
 window._MAXUI.oauth_token = '%(oauth_token)s';
-window._MAXUI.oauth_grant_type = '%(oauth_grant_type)s';
 window._MAXUI.max_server = '%(max_server)s';
 window._MAXUI.max_server_alias = '%(max_server_alias)s';
 window._MAXUI.avatar_url = '%(avatar_url)s';
@@ -22,7 +21,7 @@ window._MAXUI.activitySource = '%(activitySource)s';
 window._MAXUI.activitySortView = '%(activitySortView)s';
 window._MAXUI.language = '%(language)s';
 window._MAXUI.hidePostboxOnTimeline = true;
-window._MAXUI.domain = '%(max_domain)s';
+window._MAXUI.domain = '%(domain)s';
 """
 
 
@@ -68,7 +67,6 @@ class MAXJSVariables(BrowserView):
         return TEMPLATE % dict(
             username=username,
             oauth_token=oauth_token,
-            oauth_grant_type=settings.oauth_grant_type,
             max_server=settings.max_server,
             max_server_alias=settings.max_server_alias,
             avatar_url='%s/people/{0}/avatar/large' % (settings.max_server),
@@ -77,5 +75,5 @@ class MAXJSVariables(BrowserView):
             activitySource='timeline',
             activitySortView=activity_views_map.get(activity_view, 'recent'),
             language=default_lang,
-            max_domain=settings.max_domain
+            domain=settings.domain
         )
