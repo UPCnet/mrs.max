@@ -18,13 +18,11 @@ from mrs.max import MRSMAXMessageFactory as _
 from plone.directives import form
 
 
-DEFAULT_OAUTH_TOKEN_ENDPOINT = u'https://oauth.upcnet.es'
-DEFAULT_OAUTH_GRANT_TYPE = u'password'  # deprecated
-DEFAULT_MAX_SERVER = u'https://max.upcnet.es'
+DEFAULT_OAUTH_TOKEN_ENDPOINT = u'https://oauth-test.upc.edu'
+DEFAULT_MAX_SERVER = u'https://rocalcom.upc.edu'
 DEFAULT_HUB_SERVER = u'http://rocalcom.upc.edu:16000'
 # DEFAULT_HUB_SERVER = u'http://hub.upcnet.es'
-DEFAULT_DOMAIN = u'rootexterns'
-DEFAULT_MAX_APP_USERNAME = u'appusername'  # deprecated
+DEFAULT_DOMAIN = u'rocalcom'
 DEFAULT_MAX_RESTRICTED_USERNAME = u'restricted'
 
 
