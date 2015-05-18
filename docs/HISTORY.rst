@@ -1,11 +1,16 @@
 Changelog
 =========
 
-4.0.31 (unreleased)
--------------------
+5.0 (2015-05-18)
+----------------
 
-- Nothing changed yet.
-
+* Fix again test urls [Victor Fernandez de Alba]
+* Config definitive test environm [Victor Fernandez de Alba]
+* Fix oauth server [Victor Fernandez de Alba]
+* New test domain, max, hub and oauth URLs [Victor Fernandez de Alba]
+* Cleaned and updated control panel, added hubclient and related utility [Victor Fernandez de Alba]
+* Fixed literal [Victor Fernandez de Alba]
+* New configlet [Victor Fernandez de Alba]
 
 4.0.30 (2015-03-19)
 -------------------
