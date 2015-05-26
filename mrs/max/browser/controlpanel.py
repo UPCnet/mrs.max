@@ -18,7 +18,7 @@ from mrs.max import MRSMAXMessageFactory as _
 from plone.directives import form
 
 
-DEFAULT_OAUTH_TOKEN_ENDPOINT = u'https://oauth.beta.upc.edu/betaupc'
+DEFAULT_OAUTH_TOKEN_ENDPOINT = u'https://oauth.beta.upc.edu'
 DEFAULT_MAX_SERVER = u'https://max.beta.upc.edu/betaupc'
 DEFAULT_HUB_SERVER = u'https://hub.beta.upc.edu'
 # DEFAULT_HUB_SERVER = u'http://hub.upcnet.es'
