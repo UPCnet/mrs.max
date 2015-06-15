@@ -42,10 +42,13 @@ class oauthTokenRetriever(object):
 
         if user == "admin":
             return
-
-        oauth_token = getToken(credentials)
-        member.setMemberProperties({'oauth_token': oauth_token})
-        logger.info('oAuth token set for user: %s ' % user)
+        try:
+            oauth_token = getToken(credentials)
+        except:
+            return ''
+        else:
+            member.setMemberProperties({'oauth_token': oauth_token})
+            logger.info('oAuth token set for user: %s ' % user)
 
         return
 
