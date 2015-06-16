@@ -21,7 +21,8 @@ window._MAXUI.onReady = function() {
                 'domain': _MAXUI.domain,
                 'activitySortOrder': 'comments',
                 'activitySortView': _MAXUI.activitySortView,
-                'hidePostboxOnTimeline': _MAXUI.hidePostboxOnTimeline
+                'hidePostboxOnTimeline': _MAXUI.hidePostboxOnTimeline,
+                'literals': _MAXUI.literals,
                };
 
     var intervalID = setInterval(function(event) {

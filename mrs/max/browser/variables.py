@@ -22,6 +22,7 @@ window._MAXUI.activitySortView = '%(activitySortView)s';
 window._MAXUI.language = '%(language)s';
 window._MAXUI.hidePostboxOnTimeline = true;
 window._MAXUI.domain = '%(domain)s';
+window._MAXUI.literals = %(literals)s;
 """
 
 
@@ -59,6 +60,8 @@ class MAXJSVariables(BrowserView):
             'Activitats destacades': 'flagged'
         }
 
+        maxui = {}
+
         try:
             ulearn_settings = registry.forInterface(IUlearnControlPanelSettings)
             activity_view = ulearn_settings.activity_view
@@ -75,5 +78,6 @@ class MAXJSVariables(BrowserView):
             activitySource='timeline',
             activitySortView=activity_views_map.get(activity_view, 'recent'),
             language=default_lang,
-            domain=settings.domain
+            domain=settings.domain,
+            literals=maxui,
         )
