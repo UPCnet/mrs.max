@@ -1,11 +1,13 @@
 Changelog
 =========
 
-5.1 (unreleased)
+5.1 (2015-06-17)
 ----------------
 
-- Nothing changed yet.
-
+* New build [Victor Fernandez de Alba]
+* Afegir variable literals MAXUI [Pilar Marinas]
+* Afegir try perque no peti getToken [Pilar Marinas]
+* Fix test URLs [Victor Fernandez de Alba]
 
 5.0 (2015-05-18)
 ----------------
