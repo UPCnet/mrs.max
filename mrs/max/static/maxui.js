@@ -7272,8 +7272,8 @@ var max = max || {};
             }
             self.maxui.maxClient.getConversationSubscription(conversation_hash, self.maxui.settings.username, function(data) {
                 if (_.findWhere(self.conversations, {
-                    'id': data.id
-                })) {
+                        'id': data.id
+                    })) {
                     self.conversations = _.map(self.conversations, function(conversation) {
                         if (conversation.id === data.id) {
                             return data;
@@ -7454,13 +7454,13 @@ var max = max || {};
          *
          */
         function MaxConversationMessages(maxconversations, options) {
-            var self = this;
-            self.messages = {};
-            self.mainview = maxconversations;
-            self.maxui = self.mainview.maxui;
-            self.remaining = true;
-        }
-        // Loads the last 10 messages of a conversation
+                var self = this;
+                self.messages = {};
+                self.mainview = maxconversations;
+                self.maxui = self.mainview.maxui;
+                self.remaining = true;
+            }
+            // Loads the last 10 messages of a conversation
         MaxConversationMessages.prototype.load = function() {
             var self = this;
             var conversation_id = self.mainview.active;
@@ -8308,10 +8308,16 @@ max.templates = function() {
                   <img src="{{avatar}}">\
               </a>\
               <div id="maxui-newactivity-box">\
-                   <div class="maxui-wrapper">\
+                    <div class="maxui-wrapper">\
                        <textarea class="maxui-empty maxui-text-input" data-literal="{{textLiteral}}">{{textLiteral}}</textarea>\
                        <div class="maxui-error-box"></div>\
-                   </div>\
+                    </div>\
+                    <select id="maxui-subscriptions" style="{{showSubscriptionList}}">\
+                      <option value="timeline" class="subscription-option">Timeline</option>\
+                      {{#subscriptionList}}\
+                        <option value="{{hash}}">{{displayname}}</option>\
+                      {{/subscriptionList}}\
+                    </select>\
                    <input disabled="disabled" type="button" class="maxui-button maxui-disabled" value="{{buttonLiteral}}">\
               </div>\
             '),
@@ -9763,7 +9769,7 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
     jq.fn.maxUI = function(options) {
         // Keep a reference of the context object
         var maxui = this;
-        maxui.version = '4.1.3';
+        maxui.version = '4.1.4';
         maxui.templates = max.templates();
         maxui.utils = max.utils();
         var defaults = {
@@ -9790,7 +9796,8 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
             'hidePostboxOnTimeline': false,
             'maxTalkURL': "",
             'generator': "",
-            'domain': ""
+            'domain': "",
+            'showSubscriptionList': false
         };
         // extend defaults with user-defined settings
         maxui.settings = jq.extend(defaults, options);
@@ -9819,6 +9826,10 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
         if (maxui.settings.UISection === 'timeline' && maxui.settings.activitySource === 'timeline' && maxui.settings.readContext) {
             maxui.settings.readContext = undefined;
             maxui.settings.writeContexts = [];
+        }
+        // Never show dropdown list context in context source.
+        if (maxui.settings.activitySource === 'activities') {
+            maxui.settings.showSubscriptionList = false;
         }
         // Get language from options or set default.
         // Set literals in the choosen language and extend from user options
@@ -9904,6 +9915,7 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
             //Determine if user can write in writeContexts
             maxui.settings.displayName = data.displayName || maxui.settings.username;
             var userSubscriptions = {};
+            var subscriptionsWrite = [];
             if (data.subscribedTo) {
                 if (data.subscribedTo) {
                     if (data.subscribedTo.length > 0) {
@@ -9914,11 +9926,18 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
                             for (var pm = 0; pm < subscription.permissions.length; pm++) {
                                 var permission = subscription.permissions[pm];
                                 userSubscriptions[subscription.hash].permissions[permission] = true;
+                                if (permission === 'write') {
+                                    subscriptionsWrite.push({
+                                        hash: subscription.url,
+                                        displayname: subscription.displayName
+                                    });
+                                }
                             }
                         }
                     }
                 }
             }
+            maxui.settings.subscriptionsWrite = subscriptionsWrite;
             maxui.settings.subscriptions = userSubscriptions;
             // Start messaging only if conversations enabled
             if (!maxui.settings.disableConversations) {
@@ -10056,6 +10075,23 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
                 value: jq(this).attr('value')
             });
             jq('#maxui-search').toggleClass('folded', false);
+        });
+        //Add to writeContexts selected subscription to post in it.
+        jq('#maxui-subscriptions').on('change', function() {
+            var $urlContext = jq('#maxui-subscriptions :selected').val();
+            if ($urlContext !== 'timeline') {
+                maxui.settings.writeContexts = [];
+                maxui.settings.writeContextsHashes = [];
+                // Add read context to write contexts
+                maxui.settings.writeContexts.push($urlContext);
+                // Store the hashes of the write contexts
+                for (var wc = 0; wc < maxui.settings.writeContexts.length; wc++) {
+                    maxui.settings.writeContextsHashes.push(maxui.utils.sha1(maxui.settings.writeContexts[wc]));
+                }
+            } else {
+                maxui.settings.writeContexts = [];
+                maxui.settings.writeContextsHashes = undefined;
+            }
         });
         //Assign filter closing via delegating the click to the filters container
         jq('#maxui-search-filters').on('click', '.maxui-close', function(event) {
@@ -10603,6 +10639,16 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
             if (extra_bind !== null) {
                 extra_bind(text, this, button, event);
             }
+        }).on('paste', selector, function(event) {
+            var button = jq(this).parent().parent().find('.maxui-button');
+            if (maxui.settings.canwrite && !options.ignore_button) {
+                jq(button).removeAttr('disabled');
+                jq(button).attr('class', 'maxui-button');
+                jq(this).attr('class', 'maxui-text-input');
+            }
+            if (extra_bind !== null) {
+                extra_bind(text, this, button, event);
+            }
         }).on('focusout', selector, function(event) {
             event.preventDefault();
             var text = jq(this).val();
@@ -10611,6 +10657,11 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
             if (normalized === '') {
                 jq(this).val(literal);
             }
+            /*        }).on('mousedown', selector, function(event) {
+                        event.preventDefault();
+                        if (event.which == 3) {
+                            debugger
+                        }*/
         }).on('click', target + ' .maxui-button', function(event) {
             event.preventDefault();
             var $area = jq(this).parent().find('.maxui-text-input');
@@ -10913,6 +10964,7 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
         var $conversations_list = jq('#maxui-conversations #maxui-conversations-list');
         var $conversations_wrapper = jq('#maxui-conversations .maxui-wrapper');
         var $postbutton = jq('#maxui-newactivity-box .maxui-button');
+        var $subscriptionsSelect = jq('#maxui-newactivity-box #maxui-subscriptions');
         var $postbox = jq('#maxui-newactivity');
         var $postbox_text = jq('#maxui-newactivity-box textarea');
         var $conversationsbutton = jq('#maxui-show-conversations');
@@ -10925,6 +10977,7 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
         var sectionsWidth = widgetWidth - maxui.conversations.scrollbar.width - (sectionPadding * 2) - (widgetBorder * 2);
         var height = 320;
         if (sectionToEnable === 'conversations' && maxui.settings.currentConversationSection === 'conversations') {
+            $subscriptionsSelect.attr('style', 'display:none');
             $conversations.show();
             $common_header.removeClass('maxui-showing-messages').addClass('maxui-showing-conversations');
             $addpeople.show();
@@ -10953,6 +11006,7 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
             $postbox.show();
         }
         if (sectionToEnable === 'timeline') {
+            $subscriptionsSelect.attr('style', 'display:inline');
             maxui.conversations.listview.toggle();
             $timeline.show();
             var timeline_height = $timeline_wrapper.height();
@@ -11272,7 +11326,9 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
             buttonLiteral: maxui.settings.literals.new_activity_post,
             textLiteral: maxui.settings.literals.new_activity_text,
             literals: maxui.settings.literals,
-            showConversationsToggle: toggleCT ? 'display:block;' : 'display:none;'
+            showConversationsToggle: toggleCT ? 'display:block;' : 'display:none;',
+            showSubscriptionList: maxui.settings.showSubscriptionList ? 'display:inline;' : 'display:none',
+            subscriptionList: maxui.settings.subscriptionsWrite
         };
         var postbox = maxui.templates.postBox.render(params);
         var $postbox = jq('#maxui-newactivity');
