@@ -1,11 +1,11 @@
 Changelog
 =========
 
-5.3 (unreleased)
+5.3 (2015-06-25)
 ----------------
 
-- Nothing changed yet.
-
+* Update build [Victor Fernandez de Alba]
+* Added missing parameter in maxui.loader.js [Victor Fernandez de Alba]
 
 5.2 (2015-06-25)
 ----------------
