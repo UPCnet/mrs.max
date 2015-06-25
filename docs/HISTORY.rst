@@ -1,11 +1,11 @@
 Changelog
 =========
 
-5.2 (unreleased)
+5.2 (2015-06-25)
 ----------------
 
-- Nothing changed yet.
-
+* New build [Victor Fernandez de Alba]
+* Add new parameter to instantiation [Victor Fernandez de Alba]
 
 5.1 (2015-06-17)
 ----------------
