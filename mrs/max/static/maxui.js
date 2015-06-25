@@ -8002,6 +8002,7 @@ max.templates = function() {
                        {{/via}}\
                 </div>\
                 {{/publishedIn}}\
+                <span class="maxui-publisheddate" style="clear:both">{{dateLastComment}}</span>\
                 <div class="maxui-actions">\
                     <a href="" class="maxui-action maxui-commentaction maxui-icon- {{#replies}}maxui-has-comments{{/replies}}"><strong>{{replies.length}}</strong> {{literals.toggle_comments}}</a>\
                     <a href="" class="maxui-action maxui-favorites {{#favorited}}maxui-favorited{{/favorited}} maxui-icon-">{{literals.favorite}}</a>\
@@ -8313,7 +8314,6 @@ max.templates = function() {
                        <div class="maxui-error-box"></div>\
                     </div>\
                     <select id="maxui-subscriptions" style="{{showSubscriptionList}}">\
-                      <option value="timeline" class="subscription-option">Timeline</option>\
                       {{#subscriptionList}}\
                         <option value="{{hash}}">{{displayname}}</option>\
                       {{/subscriptionList}}\
@@ -9769,7 +9769,7 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
     jq.fn.maxUI = function(options) {
         // Keep a reference of the context object
         var maxui = this;
-        maxui.version = '4.1.4';
+        maxui.version = '4.1.7';
         maxui.templates = max.templates();
         maxui.utils = max.utils();
         var defaults = {
@@ -11174,6 +11174,7 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
             // Take replies (if exists) and format to be included as a formatted
             // subobject ready for hogan
             var replies = [];
+            var lastComment = '';
             if (activity.replies) {
                 if (activity.replies.length > 0) {
                     for (var r = 0; r < activity.replies.length; r++) {
@@ -11189,6 +11190,7 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
                         };
                         replies.push(reply);
                     }
+                    lastComment = 'Comentat '+replies[replies.length-1].date
                 }
             }
             // Take all the latter properties and join them into an object
@@ -11205,6 +11207,7 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
                 },
                 literals: maxui.settings.literals,
                 date: maxui.utils.formatDate(activity.published, maxui.language),
+                dateLastComment: lastComment,
                 text: maxui.utils.formatText(activity.object.content),
                 replies: replies,
                 favorited: activity.favorited,
@@ -11327,7 +11330,7 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
             textLiteral: maxui.settings.literals.new_activity_text,
             literals: maxui.settings.literals,
             showConversationsToggle: toggleCT ? 'display:block;' : 'display:none;',
-            showSubscriptionList: maxui.settings.showSubscriptionList ? 'display:inline;' : 'display:none',
+            showSubscriptionList: maxui.settings.showSubscriptionList ? 'display:inline;' : 'display:none;',
             subscriptionList: maxui.settings.subscriptionsWrite
         };
         var postbox = maxui.templates.postBox.render(params);
