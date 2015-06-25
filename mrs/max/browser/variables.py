@@ -8,6 +8,9 @@ from plone.registry.interfaces import IRegistry
 from mrs.max.browser.controlpanel import IMAXUISettings
 from ulearn.core.controlpanel import IUlearnControlPanelSettings
 
+# WARNING: If any other parameter should be added to the instantation you must
+# add it too to the maxui.loader.js file.
+
 TEMPLATE = """\
 if (!window._MAXUI) {window._MAXUI = {}; }
 window._MAXUI.username = '%(username)s';

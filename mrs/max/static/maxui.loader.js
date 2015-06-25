@@ -23,6 +23,7 @@ window._MAXUI.onReady = function() {
                 'activitySortView': _MAXUI.activitySortView,
                 'hidePostboxOnTimeline': _MAXUI.hidePostboxOnTimeline,
                 'literals': _MAXUI.literals,
+                'showSubscriptionList': _MAXUI.showSubscriptionList
                };
 
     var intervalID = setInterval(function(event) {
