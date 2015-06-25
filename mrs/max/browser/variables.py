@@ -20,9 +20,10 @@ window._MAXUI.contexts = '%(contexts)s';
 window._MAXUI.activitySource = '%(activitySource)s';
 window._MAXUI.activitySortView = '%(activitySortView)s';
 window._MAXUI.language = '%(language)s';
-window._MAXUI.hidePostboxOnTimeline = true;
+window._MAXUI.hidePostboxOnTimeline = false;
 window._MAXUI.domain = '%(domain)s';
 window._MAXUI.literals = %(literals)s;
+window._MAXUI.showSubscriptionList = true;
 """
 
 
