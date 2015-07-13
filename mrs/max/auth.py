@@ -62,11 +62,12 @@ class maxUserCreator(object):
 
     def execute(self, credentials):
         user = credentials.get('login').lower()
-        token = getToken(credentials)
-        if token == '':
-            return
 
         if user == "admin":
+            return
+
+        token = getToken(credentials)
+        if token == '':
             return
 
         maxclient, settings = getUtility(IMAXClient)()
