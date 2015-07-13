@@ -62,13 +62,16 @@ class maxUserCreator(object):
 
     def execute(self, credentials):
         user = credentials.get('login').lower()
+        token = getToken(credentials)
+        if token == '':
+            return
 
         if user == "admin":
             return
 
         maxclient, settings = getUtility(IMAXClient)()
-        maxclient.setActor(settings.max_restricted_username)
-        maxclient.setToken(settings.max_restricted_token)
+        maxclient.setActor(user)
+        maxclient.setToken(token)
 
         try:
             maxclient.people[user].post()
