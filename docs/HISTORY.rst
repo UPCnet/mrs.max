@@ -1,11 +1,11 @@
 Changelog
 =========
 
-5.4 (unreleased)
+5.4 (2015-07-14)
 ----------------
 
-- Nothing changed yet.
-
+* Primer comprova si es admin [Pilar Marinas]
+* Create user MAX [Pilar Marinas]
 
 5.3 (2015-06-25)
 ----------------
