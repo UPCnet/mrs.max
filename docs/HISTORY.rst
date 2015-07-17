@@ -1,11 +1,10 @@
 Changelog
 =========
 
-5.5 (unreleased)
+5.5 (2015-07-17)
 ----------------
 
-- Nothing changed yet.
-
+* Improve error cathing and logging [Carles Bruguera]
 
 5.4 (2015-07-14)
 ----------------
