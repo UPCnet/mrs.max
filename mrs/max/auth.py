@@ -8,6 +8,7 @@ from zope.component import adapts
 
 from mrs.max.utilities import prettyResponse
 from mrs.max.utilities import IMAXClient
+from maxclient.client import BadUsernameOrPasswordError
 
 import logging
 
@@ -19,13 +20,16 @@ def getToken(credentials, grant_type=None):
     password = credentials.get('password')
 
     maxclient, settings = getUtility(IMAXClient)()
-
     try:
         token = maxclient.getToken(user, password)
         return token
-    except AttributeError, error:
-        logger.error('oAuth token could not be retrieved for user: %s Reason: %s' % (user, error))
-        return ''
+    except BadUsernameOrPasswordError as error:
+        logger.error('Invalid credentials for user "{}" on "{}"'.format(user, maxclient.oauth_server))
+    except Exception as error:
+        logger.error('Exception raised while getting token for user "{}" from "{}"'.format(user, maxclient.oauth_server))
+        logger.error('{}: {}'.format(error.__class__.__name__, error.message))
+    # An empty token is returned in an exception is raised
+    return ''
 
 
 class oauthTokenRetriever(object):
@@ -42,14 +46,15 @@ class oauthTokenRetriever(object):
 
         if user == "admin":
             return
-        try:
-            oauth_token = getToken(credentials)
-        except:
-            return ''
-        else:
-            member.setMemberProperties({'oauth_token': oauth_token})
-            logger.info('oAuth token set for user: %s ' % user)
 
+        oauth_token = getToken(credentials)
+
+        if oauth_token:
+            logger.info('oAuth token set for user: %s ' % user)
+        else:
+            logger.warning('oAuth token NOT set for user: %s ' % user)
+
+        member.setMemberProperties({'oauth_token': oauth_token})
         return
 
 
@@ -68,6 +73,7 @@ class maxUserCreator(object):
 
         token = getToken(credentials)
         if token == '':
+            logger.warning('MAX user not created, we don''t have a valid token')
             return
 
         maxclient, settings = getUtility(IMAXClient)()
