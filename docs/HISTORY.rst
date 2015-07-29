@@ -1,11 +1,10 @@
 Changelog
 =========
 
-5.6 (unreleased)
+5.6 (2015-07-29)
 ----------------
 
-- Nothing changed yet.
-
+* Update maxui [Carles Bruguera]
 
 5.5 (2015-07-17)
 ----------------
