@@ -6814,8 +6814,10 @@ var max = max || {};
 
 ;
 
+"use strict";
 var max = max || {};
 (function(jq) {
+
     var views = function() {
         /** MaxChatInfo
          *
@@ -7092,7 +7094,7 @@ var max = max || {};
                         panelID: self.panelID,
                         published: self.maxui.utils.formatDate(self.data.published, self.maxui.language),
                         canManage: self.maxui.settings.username === self.data.owner,
-                        canAdd: _.contains(subscription.permissions, 'subscribe')
+                        canAdd: _.contains(subscription.permissions, 'invite')
                     };
                     self.content = self.maxui.templates.conversationSettings.render(params);
                     configurator(self);
@@ -7407,7 +7409,8 @@ var max = max || {};
                 buttonLiteral: self.maxui.settings.literals.new_message_post,
                 textLiteral: self.maxui.settings.literals.new_conversation_text,
                 literals: self.maxui.settings.literals,
-                showConversationsToggle: toggleCT ? 'display:block;' : 'display:none;'
+                showConversationsToggle: toggleCT ? 'display:block;' : 'display:none;',
+                showSubscriptionList: 'display:none;'
             };
             var postbox = self.maxui.templates.postBox.render(params);
             var $postbox = jq('#maxui-newactivity');
@@ -9769,7 +9772,7 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
     jq.fn.maxUI = function(options) {
         // Keep a reference of the context object
         var maxui = this;
-        maxui.version = '4.1.7';
+        maxui.version = '4.1.8';
         maxui.templates = max.templates();
         maxui.utils = max.utils();
         var defaults = {
@@ -9826,10 +9829,6 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
         if (maxui.settings.UISection === 'timeline' && maxui.settings.activitySource === 'timeline' && maxui.settings.readContext) {
             maxui.settings.readContext = undefined;
             maxui.settings.writeContexts = [];
-        }
-        // Never show dropdown list context in context source.
-        if (maxui.settings.activitySource === 'activities') {
-            maxui.settings.showSubscriptionList = false;
         }
         // Get language from options or set default.
         // Set literals in the choosen language and extend from user options
@@ -10977,7 +10976,7 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
         var sectionsWidth = widgetWidth - maxui.conversations.scrollbar.width - (sectionPadding * 2) - (widgetBorder * 2);
         var height = 320;
         if (sectionToEnable === 'conversations' && maxui.settings.currentConversationSection === 'conversations') {
-            $subscriptionsSelect.attr('style', 'display:none');
+            $subscriptionsSelect.attr('style', 'display:none;');
             $conversations.show();
             $common_header.removeClass('maxui-showing-messages').addClass('maxui-showing-conversations');
             $addpeople.show();
@@ -11006,7 +11005,9 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
             $postbox.show();
         }
         if (sectionToEnable === 'timeline') {
-            $subscriptionsSelect.attr('style', 'display:inline');
+            if (maxui.settings.showSubscriptionList === true){
+                $subscriptionsSelect.attr('style', 'display:inline;');
+            }
             maxui.conversations.listview.toggle();
             $timeline.show();
             var timeline_height = $timeline_wrapper.height();
@@ -11320,6 +11321,7 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
      **/
     jq.fn.renderPostbox = function() {
         var maxui = this;
+
         // Render the postbox UI if user has permission
         var showCT = maxui.settings.UISection === 'conversations';
         var toggleCT = maxui.settings.disableConversations === false && !showCT;
@@ -11333,6 +11335,7 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
             showSubscriptionList: maxui.settings.showSubscriptionList ? 'display:inline;' : 'display:none;',
             subscriptionList: maxui.settings.subscriptionsWrite
         };
+
         var postbox = maxui.templates.postBox.render(params);
         var $postbox = jq('#maxui-newactivity');
         $postbox.html(postbox);
