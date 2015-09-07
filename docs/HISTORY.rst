@@ -1,11 +1,10 @@
 Changelog
 =========
 
-5.8 (unreleased)
+5.8 (2015-09-07)
 ----------------
 
-- Nothing changed yet.
-
+* Change portrait now is done with restricted credentials, due to the use case of the massive creation of users and API [Victor Fernandez de Alba]
 
 5.7 (2015-09-07)
 ----------------
