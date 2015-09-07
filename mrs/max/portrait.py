@@ -41,22 +41,21 @@ def changeMemberPortrait(self, portrait, id=None):
         if not _checkPermission(ManageUsers, self):
             raise Unauthorized
     if portrait and portrait.filename:
-        #scaled, mimetype = scale_image(portrait, max_size=(250, 250))
+        # scaled, mimetype = scale_image(portrait, max_size=(250, 250))
         scaled, mimetype = convertSquareImage(portrait)
         portrait = Image(id=safe_id, file=scaled, title='')
         membertool = getToolByName(self, 'portal_memberdata')
         membertool._setPortrait(portrait, safe_id)
 
         # Update the user's avatar on MAX
-        #the next line to user's that have '-' in id
+        # the next line to user's that have '-' in id
         safe_id = safe_id.replace('--', '-')
-        memberdata = self.getMemberById(safe_id)
-        oauth_token = memberdata.getProperty('oauth_token', '')
         scaled.seek(0)
 
+        # Upload to MAX server using restricted user credentials
         maxclient, settings = getUtility(IMAXClient)()
-        maxclient.setActor(safe_id)
-        maxclient.setToken(oauth_token)
+        maxclient.setActor(settings.max_restricted_username)
+        maxclient.setToken(settings.max_restricted_token)
         maxclient.people[safe_id].avatar.post(upload_file=scaled)
 
 
