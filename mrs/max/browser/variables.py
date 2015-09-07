@@ -47,7 +47,8 @@ class MAXJSVariables(BrowserView):
             oauth_token = ''
         else:
             user = api.user.get_current()
-            username = user.id
+            # Force username to lowercase
+            username = user.id.lower()
             oauth_token = user.getProperty('oauth_token', None)
 
         # Use the restricted username and token in case we are admin.
