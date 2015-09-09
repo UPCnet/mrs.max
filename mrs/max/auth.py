@@ -41,20 +41,21 @@ class oauthTokenRetriever(object):
 
     def execute(self, credentials):
         user = credentials.get('login').lower()
-        pm = api.portal.get_tool(name='portal_membership')
-        member = pm.getMemberById(user)
+        password = credentials.get('password')
 
         if user == "admin":
             return
 
-        oauth_token = getToken(credentials)
+        member = api.user.get(username=user)
+
+        oauth_token = getToken(user, password)
 
         if oauth_token:
+            member.setMemberProperties({'oauth_token': oauth_token})
             logger.info('oAuth token set for user: %s ' % user)
         else:
             logger.warning('oAuth token NOT set for user: %s ' % user)
 
-        member.setMemberProperties({'oauth_token': oauth_token})
         return
 
 
@@ -67,13 +68,14 @@ class maxUserCreator(object):
 
     def execute(self, credentials):
         user = credentials.get('login').lower()
+        password = credentials.get('password')
 
         if user == "admin":
             return
 
-        token = getToken(credentials)
+        token = getToken(user, password)
         if token == '':
-            logger.warning('MAX user not created, we don''t have a valid token')
+            logger.warning('MAX user not created, we don\'t have a valid token')
             return
 
         maxclient, settings = getUtility(IMAXClient)()
