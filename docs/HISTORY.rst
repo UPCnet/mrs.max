@@ -1,11 +1,10 @@
 Changelog
 =========
 
-5.10 (unreleased)
+5.10 (2015-09-09)
 -----------------
 
-- Nothing changed yet.
-
+* Fix call to function [Victor Fernandez de Alba]
 
 5.9 (2015-09-09)
 ----------------
