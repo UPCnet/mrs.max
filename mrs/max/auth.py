@@ -15,10 +15,7 @@ import logging
 logger = logging.getLogger('mrs.max')
 
 
-def getToken(credentials, grant_type=None):
-    user = credentials.get('login').lower()
-    password = credentials.get('password')
-
+def getToken(user, password, grant_type=None):
     maxclient, settings = getUtility(IMAXClient)()
     try:
         token = maxclient.getToken(user, password)
