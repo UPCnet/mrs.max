@@ -1,11 +1,10 @@
 Changelog
 =========
 
-5.9 (unreleased)
+5.9 (2015-09-09)
 ----------------
 
-- Nothing changed yet.
-
+* Fix oauth_token set on member [Victor Fernandez de Alba]
 
 5.8 (2015-09-07)
 ----------------
