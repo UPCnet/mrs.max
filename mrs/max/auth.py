@@ -65,19 +65,22 @@ class maxUserCreator(object):
 
     def execute(self, credentials):
         user = credentials.get('login').lower()
-        password = credentials.get('password')
+        # password = credentials.get('password')
 
         if user == "admin":
             return
 
-        token = getToken(user, password)
-        if token == '':
-            logger.warning('MAX user not created, we don\'t have a valid token')
-            return
+        # Disable the creation of the user in MAX by him/herself
+        # token = getToken(user, password)
+        # if token == '':
+        #     logger.warning('MAX user not created, we don\'t have a valid token')
+        #     return
 
         maxclient, settings = getUtility(IMAXClient)()
-        maxclient.setActor(user)
-        maxclient.setToken(token)
+        maxclient.setActor(settings.max_restricted_username)
+        maxclient.setToken(settings.max_restricted_token)
+        # maxclient.setActor(user)
+        # maxclient.setToken(token)
 
         try:
             maxclient.people[user].post()
