@@ -1,11 +1,10 @@
 Changelog
 =========
 
-5.11 (unreleased)
+5.11 (2015-09-15)
 -----------------
 
-- Nothing changed yet.
-
+* Disable the MAX user auto-creation by the user him/herself [Victor Fernandez de Alba]
 
 5.10 (2015-09-09)
 -----------------
