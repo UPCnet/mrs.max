@@ -6582,6 +6582,18 @@ var max = max || {};
                 return previous_request.text;
             }
         };
+        MaxPredictive.prototype.normalizeWhiteSpace = function(s, multi) {
+            s = s.replace(/(^\s*)|(\s*$)/gi, "");
+            s = s.replace(/\n /, "\n");
+            var trimMulti = true;
+            if (arguments.length > 1) {
+                trimMulti = multi;
+            }
+            if (trimMulti === true) {
+                s = s.replace(/[ ]{2,}/gi, " ");
+            }
+            return s;
+        };
         // Fetch new predictions from source if needed, and render them
         // Also, predictions are stored in self.requests, so we try to repeat request only when needed
         // Algorith:
@@ -6591,7 +6603,7 @@ var max = max || {};
         MaxPredictive.prototype.show = function(event) {
             var self = this;
             var $input = jq(event.target);
-            var text = self.maxui.utils.normalizeWhiteSpace($input.val(), false);
+            var text = self.normalizeWhiteSpace($input.val(), false);
             if (text.length >= this.minchars) {
                 var matching_request = self.matchingRequest(text);
                 if (self.requests.hasOwnProperty(text)) {
@@ -6665,6 +6677,18 @@ var max = max || {};
             // Initialize input value with placeholder
             self.$input.val(self.placeholder);
         }
+        MaxInput.prototype.normalizeWhiteSpace = function(s, multi) {
+            s = s.replace(/(^\s*)|(\s*$)/gi, "");
+            s = s.replace(/\n /, "\n");
+            var trimMulti = true;
+            if (arguments.length > 1) {
+                trimMulti = multi;
+            }
+            if (trimMulti === true) {
+                s = s.replace(/[ ]{2,}/gi, " ");
+            }
+            return s;
+        };
         MaxInput.prototype.bind = function(eventName, callback) {
             var self = this;
             self.$delegate.on(eventName, self.input, callback);
@@ -6678,7 +6702,7 @@ var max = max || {};
         MaxInput.prototype.getInputValue = function() {
             var self = this;
             var text = this.$input.val();
-            return self.maxui.utils.normalizeWhiteSpace(text, false);
+            return self.normalizeWhiteSpace(text, false);
         };
         MaxInput.prototype.setBindings = function() {
             var maxinput = this;
@@ -6814,10 +6838,9 @@ var max = max || {};
 
 ;
 
-"use strict";
 var max = max || {};
 (function(jq) {
-
+    "use strict";
     var views = function() {
         /** MaxChatInfo
          *
@@ -7457,13 +7480,13 @@ var max = max || {};
          *
          */
         function MaxConversationMessages(maxconversations, options) {
-                var self = this;
-                self.messages = {};
-                self.mainview = maxconversations;
-                self.maxui = self.mainview.maxui;
-                self.remaining = true;
-            }
-            // Loads the last 10 messages of a conversation
+            var self = this;
+            self.messages = {};
+            self.mainview = maxconversations;
+            self.maxui = self.mainview.maxui;
+            self.remaining = true;
+        }
+        // Loads the last 10 messages of a conversation
         MaxConversationMessages.prototype.load = function() {
             var self = this;
             var conversation_id = self.mainview.active;
@@ -9772,7 +9795,7 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
     jq.fn.maxUI = function(options) {
         // Keep a reference of the context object
         var maxui = this;
-        maxui.version = '4.1.8';
+        maxui.version = '4.1.9';
         maxui.templates = max.templates();
         maxui.utils = max.utils();
         var defaults = {
@@ -10384,9 +10407,9 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
                 }
             }
             var key = event.which;
-            var matchMention = new RegExp('^\\s*([\\w\\.]+)\\s*');
+            var matchMention = new RegExp('^\\s*([\\u00C0-\\u00FC\\w\\.]+)\\s*');
             var match = text.match(matchMention);
-            var matchMentionEOL = new RegExp('^\\s*([\\w\\.]+)\\s*$');
+            var matchMentionEOL = new RegExp('^\\s*([\\u00C0-\\u00FC\\w\\.]+)\\s*$');
             var matchEOL = text.match(matchMentionEOL);
             var $selected = jq('#maxui-conversation-predictive .maxui-prediction.selected');
             var $area = jq(this);
@@ -10645,6 +10668,7 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
                 jq(button).attr('class', 'maxui-button');
                 jq(this).attr('class', 'maxui-text-input');
             }
+            var text = jq(this).val();
             if (extra_bind !== null) {
                 extra_bind(text, this, button, event);
             }
@@ -11005,7 +11029,7 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
             $postbox.show();
         }
         if (sectionToEnable === 'timeline') {
-            if (maxui.settings.showSubscriptionList === true){
+            if (maxui.settings.showSubscriptionList === true) {
                 $subscriptionsSelect.attr('style', 'display:inline;');
             }
             maxui.conversations.listview.toggle();
@@ -11191,7 +11215,7 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
                         };
                         replies.push(reply);
                     }
-                    lastComment = 'Comentat '+replies[replies.length-1].date
+                    lastComment = 'Comentat ' + replies[replies.length - 1].date;
                 }
             }
             // Take all the latter properties and join them into an object
@@ -11321,7 +11345,6 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
      **/
     jq.fn.renderPostbox = function() {
         var maxui = this;
-
         // Render the postbox UI if user has permission
         var showCT = maxui.settings.UISection === 'conversations';
         var toggleCT = maxui.settings.disableConversations === false && !showCT;
@@ -11335,7 +11358,6 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
             showSubscriptionList: maxui.settings.showSubscriptionList ? 'display:inline;' : 'display:none;',
             subscriptionList: maxui.settings.subscriptionsWrite
         };
-
         var postbox = maxui.templates.postBox.render(params);
         var $postbox = jq('#maxui-newactivity');
         $postbox.html(postbox);
