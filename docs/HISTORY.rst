@@ -1,11 +1,10 @@
 Changelog
 =========
 
-5.14 (unreleased)
+5.14 (2015-10-20)
 -----------------
 
-- Nothing changed yet.
-
+* Upgrade maxui.js to 4.1.10 [Carles Bruguera]
 
 5.13 (2015-10-14)
 -----------------
