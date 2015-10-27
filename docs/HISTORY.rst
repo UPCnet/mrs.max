@@ -1,11 +1,10 @@
 Changelog
 =========
 
-5.15 (unreleased)
+5.15 (2015-10-27)
 -----------------
 
-- Nothing changed yet.
-
+* Upgrade maxui to 4.1.11 [Carles Bruguera]
 
 5.14 (2015-10-20)
 -----------------
