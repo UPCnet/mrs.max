@@ -6511,6 +6511,7 @@ if (typeof define === 'function' && define.amd) {
 /**
  * @fileoverview
  */
+'use strict';
 var max = max || {};
 (function(jq) {
     var views = function() {
@@ -6773,6 +6774,7 @@ var max = max || {};
 
 ;
 
+'use strict';
 var max = max || {};
 (function(jq) {
     var views = function() {
@@ -6838,9 +6840,9 @@ var max = max || {};
 
 ;
 
+'use strict';
 var max = max || {};
 (function(jq) {
-    "use strict";
     var views = function() {
         /** MaxChatInfo
          *
@@ -7135,6 +7137,7 @@ var max = max || {};
 
 ;
 
+'use strict';
 var max = max || {};
 (function(jq) {
     var views = function() {
@@ -7258,6 +7261,7 @@ var max = max || {};
 
 ;
 
+'use strict';
 var max = max || {};
 (function(jq) {
     var views = function() {
@@ -7587,7 +7591,7 @@ var max = max || {};
                     'object': 'message',
                     'user': {
                         'username': message.actor.username,
-                        'displayName': message.actor.displayName
+                        'displayname': message.actor.displayName
                     },
                     'published': message.published,
                     'data': {
@@ -7630,7 +7634,7 @@ var max = max || {};
                     'object': 'message',
                     'user': {
                         'username': message.actor.username,
-                        'displayName': message.actor.displayName
+                        'displayname': message.actor.displayName
                     },
                     'published': message.published,
                     'data': {
@@ -7680,7 +7684,7 @@ var max = max || {};
                         othersMessage: others_message,
                         literals: self.maxui.settings.literals,
                         avatarURL: avatar_url,
-                        displayName: message.user.displayName,
+                        displayName: message.user.displayname,
                         showDisplayName: others_message && is_group_conversation,
                         ack: message.ack ? origin === 'maxui-user-me' : false,
                         fileDownload: message.data.objectType === 'file',
@@ -7994,11 +7998,12 @@ var max = max || {};
 ;
 
 /*jshint multistr: true */
-var max = max || {};
 /**
  * @fileoverview Provides hogan compiled templates
  *               ready to render.
  */
+'use strict';
+var max = max || {};
 max.templates = function() {
     var templates = {
         activity: Hogan.compile('\
@@ -8379,6 +8384,7 @@ max.templates = function() {
 /**
  * @fileoverview
  */
+'use strict';
 var max = max || {};
 (function(jq) {
     /** MaxMessaging
@@ -8742,6 +8748,7 @@ var max = max || {};
 
 ;
 
+'use strict';
 var max = max || {};
 (function(jq) {
     /** MaxLogging
@@ -8814,10 +8821,8 @@ var max = max || {};
 
 ;
 
+'use strict';
 var max = max || {};
-/**
- * @fileoverview Provides literals in several languages
- */
 max.literals = function(language) {
     var maxui = {};
     maxui.en = {
@@ -9006,11 +9011,8 @@ max.literals = function(language) {
 
 ;
 
+'use strict';
 var max = max || {};
-/**
- * @fileoverview Provides support functions not directly
- *               related to UI construction
- **/
 max.utils = function() {
     var settings = {};
     return {
@@ -9242,7 +9244,7 @@ max.utils = function() {
                 return str;
             }
 
-            function Utf8Encode(string) {
+            function utf8Encode(string) {
                 string = string.replace(/\r\n/g, "\n");
                 var utftext = "";
                 for (var n = 0; n < string.length; n++) {
@@ -9270,7 +9272,7 @@ max.utils = function() {
             var H4 = 0xC3D2E1F0;
             var A, B, C, D, E;
             var temp;
-            msg = Utf8Encode(msg);
+            msg = utf8Encode(msg);
             var msg_len = msg.length;
             var word_array = [];
             for (i = 0; i < msg_len - 3; i += 4) {
@@ -9356,6 +9358,7 @@ max.utils = function() {
 
 ;
 
+'use strict';
 if (!Object.keys) {
     Object.keys = function(obj) {
         var keys = [],
@@ -9802,6 +9805,9 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
 ;
 
 /*global MaxClient */
+/* @fileoverview Main Activity Stream widget module
+ */
+'use strict';
 (function(jq) {
     /**
      *    MaxUI plugin definition
@@ -9810,7 +9816,7 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
     jq.fn.maxUI = function(options) {
         // Keep a reference of the context object
         var maxui = this;
-        maxui.version = '4.1.10';
+        maxui.version = '4.1.11';
         maxui.templates = max.templates();
         maxui.utils = max.utils();
         var defaults = {
@@ -10476,7 +10482,7 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
                     } else {
                         $predictive.hide();
                         $area.attr('class', 'maxui-empty maxui-text-input');
-                        if (!text.match(RegExp('^\\s*@'))) {
+                        if (!text.match(new RegExp('^\\s*@'))) {
                             $area.attr('class', 'maxui-text-input error');
                             $area.attr('title', maxui.settings.literals.post_permission_not_here);
                         }
@@ -10574,7 +10580,7 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
                     } else {
                         jq(button).val(maxui.settings.literals.new_activity_post);
                         $predictive.hide();
-                        if (!text.match(RegExp('^\\s*@')) && !maxui.settings.canwrite) {
+                        if (!text.match(new RegExp('^\\s*@')) && !maxui.settings.canwrite) {
                             $area.attr('class', 'maxui-text-input error');
                             $area.attr('title', maxui.settings.literals.post_permission_unauthorized);
                         }
@@ -11507,6 +11513,7 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
 // of async loading of the maxui main file.
 // In the example.js file lives the code that the api consumer has to insert in the host application
 //
+'use strict';
 window.setTimeout(function() {
     if (window._MAXUI && window._MAXUI.onReady && !window._MAXUI.hasRun) {
         window._MAXUI.hasRun = true;
