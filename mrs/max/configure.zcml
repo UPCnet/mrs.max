@@ -42,15 +42,6 @@
       name="maxusercreator"
       factory=".auth.maxUserCreator" />
 
-  <include package="collective.monkeypatcher" />
-
-  <monkey:patch
-      description="Patch to change the fixed default resize dimensions of the member portrait"
-      class="Products.PlonePAS.tools.membership.MembershipTool"
-      original="changeMemberPortrait"
-      replacement=".portrait.changeMemberPortrait"
-      />
-
   <genericsetup:registerProfile
       name="default"
       title="mrs.max"
