@@ -3,6 +3,7 @@ from zope import schema
 from z3c.form import button
 from zope.event import notify
 from zope.component import queryUtility
+from zope.component import getUtility
 
 from plone.app.controlpanel.events import ConfigurationChangedEvent
 
@@ -118,7 +119,17 @@ class MAXUISettingsEditForm(controlpanel.RegistryEditForm):
         maxclient = MaxClient(url=data['max_server'])
         data['oauth_server'] = maxclient.oauth_server
 
-        changes = self.applyChanges(data)
+        self.applyChanges(data)
+
+        # Imports required to be here because of circular dependencies
+        from mrs.max.utilities import IMAXClient
+        from mrs.max.utilities import IHubClient
+        # Update the connection to the (singleton) clients utilities
+        maxclient = getUtility(IMAXClient)
+        maxclient.create_new_connection()
+
+        hubclient = getUtility(IHubClient)
+        hubclient.create_new_connection()
 
         notify(ConfigurationChangedEvent(self, data))
 
