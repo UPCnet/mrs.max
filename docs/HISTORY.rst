@@ -1,11 +1,11 @@
 Changelog
 =========
 
-5.16 (unreleased)
+5.16 (2015-11-10)
 -----------------
 
-- Nothing changed yet.
-
+* Transform MAXClient utilities into true singletons [Victor Fernandez de Alba]
+* New pluggable changeMemberPortrait more specific for ulearn [Victor Fernandez de Alba]
 
 5.15 (2015-10-27)
 -----------------
