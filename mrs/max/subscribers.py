@@ -17,6 +17,7 @@ from mrs.max.browser.controlpanel import IMAXUISettings
 
 import logging
 import plone.api
+from plone import api
 
 
 logger = logging.getLogger('mrs.max')
@@ -34,9 +35,7 @@ def updateMAXUserInfo(event):
             username = ''
             return
         else:
-            member = pm.getAuthenticatedMember()
-
-        username = member.getUserName()
+	    username = api.user.get_current().id
         memberdata = pm.getMemberById(username)
         properties = dict(displayName=memberdata.getProperty('fullname', ''),
                           twitterUsername=memberdata.getProperty('twitter_username', '')
