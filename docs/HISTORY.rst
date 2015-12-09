@@ -1,11 +1,11 @@
 Changelog
 =========
 
-5.17 (unreleased)
+5.17 (2015-12-09)
 -----------------
 
-- Nothing changed yet.
-
+* Add new maxui version [Carles Bruguera]
+* change to get username with api.user [root muntanyeta]
 
 5.16 (2015-11-10)
 -----------------
