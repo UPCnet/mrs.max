@@ -7433,7 +7433,7 @@ var max = max || {};
                 textLiteral: self.maxui.settings.literals.new_conversation_text,
                 literals: self.maxui.settings.literals,
                 showConversationsToggle: toggleCT ? 'display:block;' : 'display:none;',
-                showSubscriptionList: 'display:none;'
+                showSubscriptionList: false
             };
             var postbox = self.maxui.templates.postBox.render(params);
             var $postbox = jq('#maxui-newactivity');
@@ -9816,7 +9816,7 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
     jq.fn.maxUI = function(options) {
         // Keep a reference of the context object
         var maxui = this;
-        maxui.version = '4.1.11';
+        maxui.version = '4.1.12';
         maxui.templates = max.templates();
         maxui.utils = max.utils();
         var defaults = {
