@@ -1,11 +1,11 @@
 Changelog
 =========
 
-5.18 (unreleased)
+5.18 (2016-01-14)
 -----------------
 
-- Nothing changed yet.
-
+* Remove chameleon syntactig sugar [Carles Bruguera]
+* Remove chameleon syntactig sugar [Carles Bruguera]
 
 5.17 (2015-12-09)
 -----------------
