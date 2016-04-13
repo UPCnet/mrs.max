@@ -8465,6 +8465,18 @@ var max = max || {};
                     },
                     'conversation': {
                         id: 'c'
+                    },
+                    'tweet': {
+                        id: 't'
+                    },
+                    'activity': {
+                        id: 'a'
+                    },
+                    'context': {
+                        id: 'x'
+                    },
+                    'comment': {
+                        id: 't'
                     }
                 }
             },
@@ -9816,7 +9828,7 @@ MaxClient.prototype.unflagActivity = function(activityid, callback) {
     jq.fn.maxUI = function(options) {
         // Keep a reference of the context object
         var maxui = this;
-        maxui.version = '4.1.12';
+        maxui.version = '4.1.13';
         maxui.templates = max.templates();
         maxui.utils = max.utils();
         var defaults = {
