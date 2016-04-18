@@ -1,11 +1,10 @@
 Changelog
 =========
 
-5.19 (unreleased)
+5.19 (2016-04-18)
 -----------------
 
-- Nothing changed yet.
-
+* New maxui.min.js [Pilar Marinas]
 
 5.18 (2016-01-14)
 -----------------
