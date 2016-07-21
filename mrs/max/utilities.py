@@ -25,7 +25,7 @@ class IHubClient(Interface):
 
 
 class MAXClient(object):
-    """ The utility will return a tuple with the settins and an instance of a
+    """ The utility will return a tuple with the settings and an instance of a
         MaxClient (REST-ish) object.
     """
     grok.implements(IMAXClient)
@@ -39,20 +39,20 @@ class MAXClient(object):
     def create_new_connection(self):
         registry = queryUtility(IRegistry)
         settings = registry.forInterface(IMAXUISettings, check=False)
+        logger.error('Create new connection MAX domain:  {}'.format(settings.domain))
         self._conn = (MaxClient(url=settings.max_server, oauth_server=settings.oauth_server),
                 settings)
 
     @property
     def connection(self):
-        if self._conn is None:
-            self.create_new_connection()
+        self.create_new_connection()
         return self._conn
 
 grok.global_utility(MAXClient)
 
 
 class HUBClient(object):
-    """ The utility will return a tuple with the settins and an instance of a
+    """ The utility will return a tuple with the settings and an instance of a
         HubClient (REST-ish) object.
     """
     grok.implements(IHubClient)
@@ -66,13 +66,13 @@ class HUBClient(object):
     def create_new_connection(self):
         registry = queryUtility(IRegistry)
         settings = registry.forInterface(IMAXUISettings, check=False)
+        logger.error('Create new connection HUB domain:  {}'.format(settings.domain))
         self._conn = (HubClient(settings.domain, settings.hub_server, expand_underscores=False),
                 settings)
 
     @property
     def connection(self):
-        if self._conn is None:
-            self.create_new_connection()
+        self.create_new_connection()
         return self._conn
 
 grok.global_utility(HUBClient)
