@@ -1,11 +1,12 @@
 Changelog
 =========
 
-5.20 (unreleased)
+5.20 (2016-07-22)
 -----------------
 
-- Nothing changed yet.
-
+* Solucionar error dominio [Pilar Marinas]
+* Solucionar get token restricted nou osirisjwt [Pilar Marinas]
+* changed image from large to mini [roberto.diaz]
 
 5.19 (2016-04-18)
 -----------------
