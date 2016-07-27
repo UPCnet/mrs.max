@@ -63,7 +63,7 @@ class getRestrictedTokenForm(form.SchemaForm):
         settings.max_restricted_username = username
 
         try:
-            settings.max_restricted_token = maxclient.getToken(username, password, bypass=True)
+            settings.max_restricted_token = maxclient.getToken(username, password)
             IStatusMessage(self.request).addStatusMessage(
                 'Restricted token issued for user: {}'.format(username),
                 'info')
