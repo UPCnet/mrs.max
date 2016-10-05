@@ -1,11 +1,13 @@
 Changelog
 =========
 
-5.21 (unreleased)
+5.21 (2016-10-05)
 -----------------
 
-- Nothing changed yet.
-
+* Modify logger [Pilar Marinas]
+* MAX UI 4.1.15 setup finished [Pilar Marinas]
+* MAX UI 4.1.14 setup finished [Paco Gregori]
+* Solucionar get token restricted nou osirisjwt [Pilar Marinas]
 
 5.20 (2016-07-22)
 -----------------
