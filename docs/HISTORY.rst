@@ -1,11 +1,11 @@
 Changelog
 =========
 
-5.22 (unreleased)
+5.22 (2016-11-22)
 -----------------
 
-- Nothing changed yet.
-
+* Quitar la barra [Pilar Marinas]
+* Quitar barra para que no quite la instancia [Pilar Marinas]
 
 5.21 (2016-10-05)
 -----------------
