@@ -1,11 +1,12 @@
 Changelog
 =========
 
-5.23 (unreleased)
+5.23 (2017-01-13)
 -----------------
 
-- Nothing changed yet.
-
+* version 4.1.16, add autoreload activities [Paco Gregori]
+* add setInterval to autoreload community activities [Paco Gregori]
+* twitter_username [Pilar Marinas]
 
 5.22 (2016-11-22)
 -----------------
