@@ -113,7 +113,7 @@ def main():
     path = '/'.join(config['js_location'].split('/')[:-1])
     open(path + '/maxui.js', 'w').write(js)
 
-    #Download and modify CSS
+    # Download and modify CSS
     css = downloadFile(config, 'builds/{}/maxui.min.css'.format(version))
     sys.stdout.write(" Modifying font links ")
     sys.stdout.flush()
@@ -123,7 +123,7 @@ def main():
     sys.stdout.write("✓\n")
     sys.stdout.flush()
 
-    #Download fonts
+    # Download fonts
     extensions = ['eot', 'svg', 'ttf', 'woff']
     for extension in extensions:
         fontbytes = downloadFile(config, 'builds/{}/font/maxicons.'.format(version) + extension)
@@ -137,6 +137,7 @@ def main():
     #     open(config['images_location'] + '/' + unquote(image), 'w').write(imagebytes)
 
     print '\n MAX UI {} setup finished\n'.format(version)
+
 
 if __name__ == "__main__":
     main()

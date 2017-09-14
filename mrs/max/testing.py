@@ -23,7 +23,7 @@ class MrsmaxLayer(PloneSandboxLayer):
         )
 
         # Install products that use an old-style initialize() function
-        #z2.installProduct(app, 'Products.PloneFormGen')
+        # z2.installProduct(app, 'Products.PloneFormGen')
 
 #    def tearDownZope(self, app):
 #        # Uninstall products installed above
@@ -31,6 +31,7 @@ class MrsmaxLayer(PloneSandboxLayer):
 
     def setUpPloneSite(self, portal):
         applyProfile(portal, 'mrs.max:default')
+
 
 MRS_MAX_FIXTURE = MrsmaxLayer()
 MRS_MAX_INTEGRATION_TESTING = IntegrationTesting(

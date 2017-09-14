@@ -13,7 +13,8 @@ class IEnhancedUserDataSchema(IUserDataSchema):
     """ Use all the fields from the default user data schema, and add various
     extra fields.
     """
-    portrait = FileUpload(title=PLMF(u'label_portrait', default=u'Portrait'),
+    portrait = FileUpload(
+        title=PLMF(u'label_portrait', default=u'Portrait'),
         description=_(u'help_portrait',
                       default=u'To add or change the portrait: click the '
                       '"Browse" button; select a picture of yourself.'),

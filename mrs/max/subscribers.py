@@ -37,7 +37,7 @@ def updateMAXUserInfo(event):
             username = ''
             return
         else:
-	    username = api.user.get_current().id
+            username = api.user.get_current().id
         memberdata = pm.getMemberById(username)
         properties = dict(displayName=memberdata.getProperty('fullname', ''),
                           twitterUsername=memberdata.getProperty('twitter_username', '')
@@ -84,9 +84,9 @@ def createMAXUser(principal, event):
             if maxclient.last_response_code == 201:
                 logger.info('MAX user created for user: %s' % user)
             elif maxclient.last_response_code == 200:
-                logger.info('MAX user already created for user: {}'.format(user))
+                logger.info('MAX user already created: {}'.format(user))
             else:
-                logger.error('Error creating MAX user for user: {}. '.format(user))
+                logger.error('Error creating MAX user: {}. '.format(user))
                 logger.error(prettyResponse(maxclient.last_response))
         except:
             logger.error('Could not contact with MAX server.')

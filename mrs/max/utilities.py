@@ -39,14 +39,14 @@ class MAXClient(object):
     def create_new_connection(self):
         registry = queryUtility(IRegistry)
         settings = registry.forInterface(IMAXUISettings, check=False)
-        logger.info('Created new MAX connection from domain: {}'.format(settings.domain))
-        self._conn = (MaxClient(url=settings.max_server, oauth_server=settings.oauth_server),
-                settings)
+        logger.info('New MAX connection from domain: {}'.format(settings.domain))
+        self._conn = (MaxClient(url=settings.max_server, oauth_server=settings.oauth_server), settings)
 
     @property
     def connection(self):
         self.create_new_connection()
         return self._conn
+
 
 grok.global_utility(MAXClient)
 
@@ -66,14 +66,14 @@ class HUBClient(object):
     def create_new_connection(self):
         registry = queryUtility(IRegistry)
         settings = registry.forInterface(IMAXUISettings, check=False)
-        logger.info('Created new HUB connection from domain: {}'.format(settings.domain))
-        self._conn = (HubClient(settings.domain, settings.hub_server, expand_underscores=False),
-                settings)
+        logger.info('New HUB connection from domain: {}'.format(settings.domain))
+        self._conn = (HubClient(settings.domain, settings.hub_server, expand_underscores=False), settings)
 
     @property
     def connection(self):
         self.create_new_connection()
         return self._conn
+
 
 grok.global_utility(HUBClient)
 
