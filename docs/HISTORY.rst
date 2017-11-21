@@ -1,11 +1,12 @@
 Changelog
 =========
 
-5.26 (unreleased)
+5.26 (2017-11-21)
 -----------------
 
-- Nothing changed yet.
-
+* MAX UI 4.1.19 setup finished [Pilar Marinas]
+* PEP8 [Roberto Diaz]
+* bypass admin [Roberto Diaz]
 
 5.25 (2017-07-12)
 -----------------
