@@ -49,9 +49,9 @@ class oauthTokenRetriever(object):
 
         if oauth_token:
             member.setMemberProperties({'oauth_token': oauth_token})
-            logger.info('oAuth token set for user: %s ' % user)
+            logger.info('oAuth token set for user %s ' % user)
         else:
-            logger.warning('oAuth token NOT set for user: %s ' % user)
+            logger.warning('oAuth token NOT set for user %s ' % user)
 
         return
 
@@ -86,11 +86,11 @@ class maxUserCreator(object):
             maxclient.people[user].post()
 
             if maxclient.last_response_code == 201:
-                logger.info('MAX user created for user: %s' % user)
+                logger.info('MAX user created:  %s' % user)
             elif maxclient.last_response_code == 200:
-                logger.info('MAX user already created for user: {}'.format(user))
+                logger.info('MAX user already created: {}'.format(user))
             else:
-                logger.error('Error creating MAX user for user: {}. '.format(user))
+                logger.error('Error creating MAX user: {}. '.format(user))
                 logger.error(prettyResponse(maxclient.last_response))
 
             # Temporarily subscribe always the user to the default context

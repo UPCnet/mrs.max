@@ -82,11 +82,11 @@ def createMAXUser(principal, event):
             maxclient.people[user].post()
 
             if maxclient.last_response_code == 201:
-                logger.info('MAX user created for user: %s' % user)
+                logger.info('MAX user created: %s' % user)
             elif maxclient.last_response_code == 200:
                 logger.info('MAX user already created: {}'.format(user))
             else:
-                logger.error('Error creating MAX user: {}. '.format(user))
+                logger.error('MAX Error creating user: {}. '.format(user))
                 logger.error(prettyResponse(maxclient.last_response))
         except:
             logger.error('Could not contact with MAX server.')

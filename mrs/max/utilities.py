@@ -39,7 +39,7 @@ class MAXClient(object):
     def create_new_connection(self):
         registry = queryUtility(IRegistry)
         settings = registry.forInterface(IMAXUISettings, check=False)
-        logger.info('New MAX connection from domain: {}'.format(settings.domain))
+        logger.info('- Connected to MAX from domain {}'.format(settings.domain))
         self._conn = (MaxClient(url=settings.max_server, oauth_server=settings.oauth_server), settings)
 
     @property
@@ -66,7 +66,7 @@ class HUBClient(object):
     def create_new_connection(self):
         registry = queryUtility(IRegistry)
         settings = registry.forInterface(IMAXUISettings, check=False)
-        logger.info('New HUB connection from domain: {}'.format(settings.domain))
+        logger.info('- Connected to HUB from domain {}'.format(settings.domain))
         self._conn = (HubClient(settings.domain, settings.hub_server, expand_underscores=False), settings)
 
     @property
