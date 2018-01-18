@@ -1,11 +1,11 @@
 Changelog
 =========
 
-5.27 (unreleased)
+5.27 (2018-01-18)
 -----------------
 
-- Nothing changed yet.
-
+* updated messages [Roberto Diaz]
+* MAX UI 4.1.21 setup finished [Pilar Marinas]
 
 5.26 (2017-11-21)
 -----------------
