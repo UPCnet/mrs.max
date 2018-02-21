@@ -1,11 +1,13 @@
 Changelog
 =========
 
-5.28 (unreleased)
+5.28 (2018-02-21)
 -----------------
 
-- Nothing changed yet.
-
+* Merge remote-tracking branch 'origin/develop' [Pilar Marinas]
+* MAX UI 4.1.23 setup finished [Pilar Marinas]
+* Reload activity [iago.lopez]
+* Traducir MAX segun el idioma del usuario [iago.lopez]
 
 5.27 (2018-01-18)
 -----------------
