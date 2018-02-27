@@ -1,11 +1,11 @@
 Changelog
 =========
 
-5.29 (unreleased)
+5.29 (2018-02-27)
 -----------------
 
-- Nothing changed yet.
-
+* Merge remote-tracking branch 'origin/develop' [Pilar Marinas]
+* Añadir un timeout al reloadactivity.js [iago.lopez]
 
 5.28 (2018-02-21)
 -----------------
