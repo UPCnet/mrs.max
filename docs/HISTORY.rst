@@ -1,11 +1,10 @@
 Changelog
 =========
 
-5.30 (unreleased)
+5.30 (2018-05-22)
 -----------------
 
-- Nothing changed yet.
-
+* Solucionar que solo se creen en el MAX usuarios que esten en el LDAP [Pilar Marinas]
 
 5.29 (2018-02-27)
 -----------------
