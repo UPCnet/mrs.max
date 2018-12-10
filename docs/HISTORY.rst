@@ -1,11 +1,10 @@
 Changelog
 =========
 
-5.34 (unreleased)
+5.34 (2018-12-10)
 -----------------
 
-- Nothing changed yet.
-
+* MAX UI 4.1.27 setup finished [Iago López Fernández]
 
 5.33 (2018-07-18)
 -----------------
